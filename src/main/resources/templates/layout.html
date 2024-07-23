@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Web Apps Practice</title>
+<link th:href="@{/css/index.css}" rel="stylesheet">
+<script th:src="@{/js/script.js}"></script>
+<style> @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+	<header>
+		<h1 class="header-title"><img th:src="@{/img/pets.png}" class="pets">멍멍멍 강아지 멍멍멍</h1>
+	</header>
+	<nav>
+		<ul id="menu">
+			<li><a th:href="@{/}">홈</a></li>
+			<li th:each="board : ${menu}"><a th:href="'/board/' + ${board.board_no}" th:text="${board.board_name}"></a></li>
+			<!-- <li><a th:href="@{/board}">게시판</a></li> -->
+			<li><a href="/galary">갤러리</a></li>
+			<li><a th:href="@{/inquire}">문의하기</a></li>			
+			<li th:if="${#authorization.expression('hasRole(''USER'')')}"><a th:href="@{/member}">회원정보</a></li>
+			<li th:if="${#authorization.expression('hasRole(''ADMIN'')')}"><a th:href="@{/manage}">회원관리</a></li>
+			<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">로그아웃</a></li>
+			<li sec:authorize="isAnonymous()"><a th:href="@{/login}">로그인</a></li>
+			<li sec:authorize="isAnonymous()"><a th:href="@{/join}">회원가입</a></li>
+		</ul>
+	</nav>
+
+	<th:block layout:fragment="content"></th:block>
+
+	<footer>
+		<p>하랑이집</p>
+	</footer>
+
+</body>
+
+</html>

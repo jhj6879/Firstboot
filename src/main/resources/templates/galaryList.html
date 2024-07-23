@@ -1,0 +1,19 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" id="contents">
+	<div id="left"></div>
+	<div id="main">
+		<h1>사진 갤러리</h1>
+		<div sec:authorize="isAuthenticated()">
+			<input type="button" value="사진등록" onclick="location.href='/addGalary'">
+		</div>
+		<div class="galary_list">
+			<div class="galary_frame">
+				<img src="#">
+				<p th:text="${galary_list.title}"></p>
+				<p th:text="${galary_list.userid}"></p>
+			</div>
+		</div>
+	</div>
+	<div id="right"></div>
+</div>
+</html>

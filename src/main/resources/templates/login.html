@@ -1,0 +1,37 @@
+<html layout:decorate="~{layout}">
+
+<div layout:fragment="content" id="content">
+
+	<div>
+		<img src="./img/lock.png" class="lock" >
+	</div>
+	<div>
+		<form name="loginForm" action="login" method="post">
+			<div id="msg"></div>
+			<!-- 타임리프일 경우 경고 메시지는 이렇게 할 수 있다. -->
+			<div th:if="${param.error}" id="massage">
+			<p>※ 아이디 또는 패스워드가 잘못되었습니다.</p>
+			</div>
+			<table>
+				<tr>
+					<td>아이디</td>
+					<td><input id="userid" name="username" type="text" class="userid" placeholder="아이디를 3~8글로 입력"></td>
+				</tr>
+				<tr>
+					<td>패스워드</td>
+					<td><input id="userpwd" name="password" type="password" class="userpwd" placeholder="4~20자 사이로 입력"></td>
+				</tr>
+			</table>
+			<div>
+			<input type="button" value="로그인" onclick="checkFormLogin()"> 
+			<input type="button" value="회원가입" onclick="location.href='join'">
+			</div>
+			<!-- 자바 스크립트 동작을 위해 href="javascript:void(0)" 주소 데신 적용 -->
+			<a href="javascript:void(0)" onclick="findId()">아이디 찾기</a>
+			<a href="javascript:void(0)" onclick="findPw()">비밀번호 찾기</a>
+		</form>
+	</div>
+
+</div>
+
+</html>

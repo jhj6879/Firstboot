@@ -1,0 +1,61 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" id="contents">
+	<div id="left">
+	</div>
+	
+	<div id="main">
+		<h1 th:text="${board.board_name}"></h1>
+		<form name="viewForm">
+		<table>
+			<tr>
+				<td>글 제목</td>
+				<td th:text="${post.title}"></td>
+			</tr>
+			<tr>
+				<td>작성자</td>
+				<td th:text="${post.userid}"></td>
+			</tr>
+			<tr>
+				<td>내용</td>
+				<td><textarea name="content" th:text="${post.content}" readonly></textarea></td>
+			</tr>
+			<tr>
+				<td>첨부파일</td>
+				<td>
+					<p th:if="${file != null}" th:each="file : ${file_list}">
+					<a th:text="${file.org_file_name}" th:href="@{'/download/' + ${file.id}}"></a>
+					</p>
+				</td>
+			</tr>
+		</table>
+		<span th:if="${#authentication.name == post.userid}">
+		<input type="button" value="글 수정" th:onclick="|location.href='/edit/' + ${post.post_no}|">
+		<input type="button" value="글 삭제" th:onclick="|location.href='/delete/' + ${post.post_no}|">
+		</span>
+		<input type="button" value="글 목록" th:onclick="|location.href='/board/' + ${board.board_no}|">
+		</form>
+		<br>
+		<form name="reply" action="/reply" method="post">
+			<table>
+			<tr sec:authorize="isAuthenticated()">
+				<th>댓글</th>
+				<td>
+					<input type="text" name="comment">
+					<input type="hidden" name="post_no" th:value="${post.post_no}">
+					<input type="hidden" name="userid" th:value="${#authentication.name}">
+				</td>
+				<td><input type="submit" value="입력"></td>
+			</tr>
+			<tr th:each="reply: ${reply_list}">
+				<td th:text="${reply.userid}"></td>
+				<td th:text="${reply.comment}"></td>
+				<td th:text="${reply.create_date}"></td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	
+	<div id="right">
+	</div>
+</div>
+</html>

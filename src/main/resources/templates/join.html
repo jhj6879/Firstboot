@@ -1,0 +1,55 @@
+<html layout:decorate="~{layout}">
+
+	<div layout:fragment="content" id="content">
+	
+        <h2>회원가입</h2>
+        <form name="joinForm" action="join" method="post" id="joinForm">
+            <table id="userTable">
+                <tr>
+                    <td>아이디</td>
+                    <td>
+                        <input type="text" name="userid" id="userid" placeholder="아이디를 3~8글로 입력">
+                        <input type="button" onclick="checkId()" value="중복확인">
+                    </td>
+                </tr>
+                <tr>
+                	<td colspan=2 id="id-area"></td>
+                </tr>
+                <tr>
+                    <td>비밀번호</td>
+                    <td>
+                        <input type="password" name="userpwd" id="userpwd" placeholder="4~20자 사이로 입력">
+                    </td>
+                </tr>
+                <tr>
+                    <td>이름</td>
+                    <td><input type="text" name="username" id="username"></td>
+                </tr>
+                <tr>
+                    <td>생년월일</td>
+                    <td><input type="date" name="birthdate" id="birthdate"></td>
+                </tr>
+                <tr>
+                    <td>성별</td>
+                    <td>
+                        <input type="radio" name="gender" id="genderM" value="M" checked>남자
+                        <input type="radio" name="gender" id="genderG" value="G" checked>여자
+                    </td>
+                </tr>
+                <tr>
+                    <td>전화번호</td>
+                    <td><input type="text" name="usertel" id="usertel"></td>
+                </tr>
+                <tr>
+                    <td>주소</td>
+                    <td><input type="text" name="useraddr" id="useraddr"></td>
+                </tr>
+            </table>
+            <br>
+            <input type="button" value="회원가입" onclick="checkFormjoin()">
+            <input type="reset" value="다시입력">
+            <a href="/"><input type="button" value="홈으로"></a>
+        </form>
+	
+	</div>
+</html>

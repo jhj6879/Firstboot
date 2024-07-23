@@ -1,0 +1,186 @@
+* {
+	font-family: "Nanum Pen Script", cursive;
+	font-weight: 400;
+	font-style: normal;
+}
+
+body {
+	background-color: white;
+}
+
+header {
+	height: 80px;
+	background-color: lightgreen;
+	display: flex;
+	align-items: center;
+	font-size: 30px;
+}
+
+nav {
+	height: 30px;
+	background-color: lightpink;
+	font-size: 20px;
+}
+
+#contents {
+	min-height: 500px;
+	display: flex;
+	background-color: white;
+	font-size: 18px;
+}
+
+#left, #right {
+	width: 100px;
+}
+
+#main {
+	width: 100%;
+	font-size: 18px;
+}
+
+footer {
+	height: 50px;
+	background-color: darkgrey;
+	font-size: 18px;
+}
+
+.header-title {
+	margin-left: 10px;
+}
+
+img {
+	/*float: left; 이거 적용하면 글자가 아래가 아니라 옆으로 붙음*/
+	width: 150px;
+	height: 150px;
+}
+
+#menu {
+	display: flex;
+	list-style: none;
+}
+
+#menu li {
+	margin: 2px 10px;
+}
+
+#menu li a {
+	text-decoration: none;
+}
+
+#menu li a:hover {
+	color: blue;
+	font-weight: bolder;
+	background-color: chartreuse;
+}
+
+.dog {
+	color: rgb(178, 138, 214);
+	font-weight: bold;
+}
+
+.pets {
+	width: 50px;
+	height: 50px;
+}
+
+.like {
+	width: 50px;
+	height: 50px;
+}
+
+.lock {
+	width: 50px;
+	height: 50px;
+}
+
+.board {
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb(187, 250, 163);
+	padding: 5px 10px;
+	width: 100px;
+	height: 30px;
+}
+
+.ti {
+	font-size: 20px;
+	background-color: aquamarine;
+}
+
+.dog {
+	font-size: 25px;
+}
+
+.bu {
+	margin-left: 3px;
+}
+
+th{
+	background-color: aquamarine;
+	font-size: 20px;
+}
+
+td{
+	background-color: beige;
+	font-size: 20px;
+}
+
+/*th, td{
+	border-style: solid;
+	border-width: 1px;
+	border-color: grey;
+	font-size: 20px;
+}*/
+
+.size-50 {
+	width: 50px 
+}
+
+.size-100 {
+	width: 100px 
+}
+
+.size-150 {
+	width: 150px;
+}
+
+.size-200 {
+	width: 200px;
+}
+
+.size-250 {
+	width: 250px;
+}
+
+.size-400 {
+	width: 400px;
+}
+
+.align-center {
+	text-align: center;
+}
+
+.align-right {
+	text-align: right;
+}
+
+.align-left {
+	text-align: left;
+}
+
+.padding-left-5{
+	padding-left: 5px; 
+}
+
+.galary_list{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.galary_frame{
+	width: 260px;
+	display: inline-block;
+	background-color: yellow;
+}
