@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.myweb.firstboot.Search;
 import com.myweb.firstboot.dao.BoardDao;
 import com.myweb.firstboot.dto.BoardDto;
+import com.myweb.firstboot.dto.GalaryDto;
+import com.myweb.firstboot.dto.ImgmngDto;
 import com.myweb.firstboot.dto.PostDto;
 import com.myweb.firstboot.dto.ReplyDto;
 
@@ -21,9 +24,25 @@ public class BoardServiceIpl implements BoardService {
 		return dao.selectPostListAll();
 	}
 	
-	//오버로딩
-	public List<PostDto> getPostListByBoard(int board_no){
-		return dao.selectPostListByBoardNo(board_no);
+	//오버로딩 페이징과 같이 합함
+//	public List<PostDto> getPostListByBoard(int board_no){
+//		return dao.selectPostListByBoardNo(board_no);
+//	}
+	// 페이징 기능
+	public List<PostDto> getPostListByBoard(int board_no, Search search){
+		search.calcPage(dao.selectPostCntByBoardNo(board_no));
+		int offset = search.getOffset();
+		int cnt = search.getRecordSize();
+		return dao.selectPostListByBoardNo(board_no, offset, cnt);
+	}
+	
+	// 검색기능
+	public List<PostDto> getPostListByKeyword(int board_no, Search page) {
+		page.calcPage(dao.selectPostCntByBoardNo(board_no, page.getKeyword()));
+		int offset = page.getOffset();
+		int cnt = page.getRecordSize();
+		String keyword = page.getKeyword();
+		return dao.selectPostListByKeyword(board_no, offset, cnt, keyword);
 	}
 	
 	public PostDto putPost(PostDto dto) {
@@ -81,6 +100,43 @@ public class BoardServiceIpl implements BoardService {
 	public void addBoard(BoardDto dto) { 
 		dao.insertBoard(dto);
 	}
+
+	@Override
+	public void addGalary(GalaryDto dto) {
+		dao.insertGalary(dto);
+	}
+	
+	// 이미지 업로드
+	public void imgUpload(ImgmngDto imgDto) {
+		dao.insertImg(imgDto);
+	}
+	
+	//이미지 리스트 조회
+	public List<GalaryDto> getGalaryList() {
+		return dao.selectGalaryList();
+	}
+	
+	// 이미지 리스트 조회
+	public List<ImgmngDto> downloadImageList(int galary_id) {
+		return dao.selectImageByGalaryId(galary_id);
+	}
+	
+	//이미지 다운로드
+	public ImgmngDto downloadImage(int id) {
+		return dao.selectImageById(id);
+	}
+
+	@Override
+	public ImgmngDto getGalaryId(int galary_id) {
+		return dao.selectImgGalaryId(galary_id);
+	}
+
+	@Override
+	public GalaryDto getGalary(int galary_id) {
+		return dao.selectGalaryId(galary_id);
+	}
+	
+	
 	
 }
 

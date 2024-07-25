@@ -184,3 +184,27 @@ td{
 	display: inline-block;
 	background-color: yellow;
 }
+
+/*페이징 CSS 설정*/
+.page{
+	display: flex;
+}
+.page li{
+	list-style: none;
+	margin: 10px;
+}
+.page_link_bold{
+	font-weight: bold;
+}
+.page_link{
+	font-weight: normal;
+}
+.page li a {
+	color: blue;
+	text-decoration: none;
+}
+
+.page li a:hover {
+	color: blue;
+	font-weight: bolder;
+}

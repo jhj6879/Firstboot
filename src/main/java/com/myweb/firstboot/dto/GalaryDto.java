@@ -16,4 +16,5 @@ public class GalaryDto {
 	private String title;
 	private String userid;
 	private int hit_cnt;
+	private int img_id;
 }

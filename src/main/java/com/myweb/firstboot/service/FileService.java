@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.myweb.firstboot.dao.FileDao;
 import com.myweb.firstboot.dto.FileDto;
-import com.myweb.firstboot.dto.GalaryDto;
-import com.myweb.firstboot.dto.ImgmngDto;
 
 @Service
 public class FileService {
@@ -31,13 +29,5 @@ public class FileService {
 		return fileDao.selectFileById(id);
 	}
 	
-	// 이미지 업로드
-	public void imgUpload(ImgmngDto imgDto) {
-		fileDao.insertImg(imgDto);
-	}
-	
-	//이미지 리스트 조회
-	public List<GalaryDto> ImgDownloadList(String userid) {
-		return fileDao.selectImgByUserid(userid);
-	}
+
 }

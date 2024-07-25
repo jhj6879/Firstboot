@@ -117,6 +117,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.checkMember(dto);
 	}
 
+	public String getMemberByName(MemberDto dto) {
+		return memberDao.selectUserId(dto);
+	}
+
 //	public String checkMemberId(MemberDto dto) {
 //		String userId = memberDao.checkMemberId(dto);
 //		return userId;

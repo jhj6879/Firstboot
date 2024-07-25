@@ -7,10 +7,13 @@
 			<input type="button" value="사진등록" onclick="location.href='/addGalary'">
 		</div>
 		<div class="galary_list">
-			<div class="galary_frame">
-				<img src="#">
-				<p th:text="${galary_list.title}"></p>
-				<p th:text="${galary_list.userid}"></p>
+			<div th:each="dto : ${list}" class="galary_frame">
+				<!-- 해당 아이디에 대한 이미지 가져오기 thumbnali 이용해 해당 아이디 가져오기 -->
+				<img th:src="@{'/downloadImg/' + ${dto.img_id}}">
+				<p>
+				<a th:text="${dto.title}" th:href="@{'/imgview/' + ${dto.id}}"></a>
+				</p>
+				<p th:text="${dto.userid}"></p>
 			</div>
 		</div>
 	</div>

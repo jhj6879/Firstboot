@@ -12,6 +12,19 @@
 		<div th:if="${#authorization.expression('hasRole(''ADMIN'')')} and board_no == 2">
 		<input type="button" value="공지사항 작성" th:onclick="|location.href='/write/' + ${board.board_no}|">
 		</div>
+		
+		<!-- 검색 기능 -->
+		<div class="search">
+			<select id="searchType" name="searchType" title="검색 유형 선택">
+				<option value="">전체 검색</option>
+				<option value="title">글 제목</option>
+			</select> <input type="text" id="keyword" name="keyword"
+				placeholder="키워드를 입력해 주세요." title="키워드 입력" />
+			<button type="button" class="bt_search" th:data-boardno="${board_no}" onclick="search(this)">
+				<i class="fas fa-search"></i><span class="skip_info">검색</span>
+			</button>
+		</div>
+
 		<table>
 			<tr>
 				<th class="size-60">글 번호</th>
@@ -28,9 +41,28 @@
 				<td class="align-center" th:text="${dto.hit_cnt}"></td>
 			</tr>
 		</table>
-
+		<br>
+		<div>
+			<ul class="page">
+				<li th:if="${page.existPrevPage}" class="prev">
+					<a class="page_link" th:href="@{'/board/' + ${board_no} + '/' + ${page.startPage - 1}}">이전</a>
+				</li>
+				<li th:each="number : ${#numbers.sequence(page.startPage, page.endPage)}" class="page_item">
+					<a class="page_link_bold" th:if="${page.page == number}" 
+					th:href="@{'/board/' + ${board_no} + '/' + ${number}}"
+					th:text="${number}">
+					</a>
+					<a class="page_link" th:if="${page.page != number}" 
+					th:href="@{'/board/' + ${board_no} + '/' + ${number}}"
+					th:text="${number}">
+					</a>
+				</li>
+				<li th:if="${page.existNextPage}" class="next">
+					<a class="page_link" th:href="@{'/board/' + ${board_no} + '/' + ${page.endPage + 1}}">다음</a>
+				</li>
+			</ul>
+		</div>
 	</div>
-	
 	<div id="right">
 	</div>
 </div>

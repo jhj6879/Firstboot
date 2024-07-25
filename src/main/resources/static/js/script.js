@@ -310,14 +310,59 @@ function addFile(button) {
 	const parent = button.parentElement;
 	var addEl = document.createElement('p');
 	addEl.innerHTML = '<input type="file" name="file">'
-						+ '<input type="button" value="X" onclick="delFile(this)">';
+					+ '<input type="button" value="X" onclick="delFile(this)">';
 	parent.appendChild(addEl);
 }
 
-function addImg(button){
+function addImg(button) {
 	const parent = button.parentElement;
 	var addIm = document.createElement('p');
 	addIm.innerHTML = '<input type="file" name="file">'
-					 + '<input type="button" value="X" onclick="delFile(this)">';
+					+ '<input type="checkbox">대표이미지'
+					+ '<input type="button" value="X" onclick="delFile(this)">';
 	parent.appendChild(addIm);
+}
+
+// 대표이미지 체크
+function galarySubmit() {
+	var chkbxs = document.querySelectorAll('input[type="checkbox"]');
+	for(var i=0; i<chkbxs.length; i++) {
+		var thumbnailEl = document.createElement('input');
+		thumbnailEl.type = 'hidden';
+		thumbnailEl.name = 'thumbnail';
+		thumbnailEl.value = chkbxs[i].checked ? '1' : '0';
+		chkbxs[i].parentElement.parentElement.appendChild(thumbnailEl);
+	}
+	document.galaryForm.submit();
+}
+
+/*// 페이지 이동
+function movePage(page) {
+
+	// 1. 검색 폼
+	const form = document.getElementById('searchForm');
+
+	// 2. drawPage( )의 각 버튼에 선언된 onclick 이벤트를 통해 전달받는 page(페이지 번호)를 기준으로 객체 생성
+	const queryParams = {
+		page: (page) ? page : 1,
+		recordSize: 5,
+		pageSize: 5,
+		searchType: form.searchType.value,
+		keyword: form.keyword.value
+	}
+
+	
+	 3. location.pathname : 리스트 페이지의 URI("/post/list.do")를 의미
+	    new URLSearchParams(queryParams).toString() : queryParams의 모든 프로퍼티(key-value)를 쿼리 스트링으로 변환
+	    URI + 쿼리 스트링에 해당하는 주소로 이동
+	    (해당 함수가 리턴해주는 값을 브라우저 콘솔(console)에 찍어보시면 쉽게 이해하실 수 있습니다.)
+	
+	location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
+}*/
+
+// 페이징 검색기능
+function search(button){
+	var boardno = button.getAttribute('data-boardno');
+	var keyword = document.getElementById("keyword").value;
+	location.href="/search/" + boardno + "?keyword=" + keyword;
 }

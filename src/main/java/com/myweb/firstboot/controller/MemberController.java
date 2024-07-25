@@ -167,6 +167,7 @@ public class MemberController {
 		return "findPwForm";
 	}
 	
+	//비밀번호 찾기
 	@PostMapping("/findpw")
 	public String findpw(Model model, MemberDto dto) {
 		String msg = "";
@@ -201,38 +202,24 @@ public class MemberController {
 		return "sendmsg";
 	}
 	
-//	//  아이디 찾기
-//	@GetMapping("/findid")
-//	public String findId() {
-//		return "findIdForm";
-//	}
-//	
-//	@PostMapping("/findid")
-//	public String findid(Model model, MemberDto dto) {
-//		String msg = "";
-//		
-//		String ck = memberService.checkMemberId(dto);		
-//		
-//		if (ck != null) {
-//			msg = "ok";
-//		}
-//		else {
-//			msg = "error";
-//			model.addAttribute("msg",msg);
-//			return "findIdForm";
-//		}
-//		
-//		// 권한 사용자 설정
-//		dto.setPermit(0);
-//		memberService.memberId(dto.getUserid());
-//		
-//		ck = mailService.makeMasgTmpId(dto);
-//		if(ck != null) {
-//			msg = "메일전송에 실패했습니다. 잠시후 다시 시도해 주세요.";
-//		}
-//		msg = "메일을 통해 임시  아이디를 전송했습니다. 메일을 확인해 주세요.";
-//		model.addAttribute("msg",msg);
-//		
-//		return "sendmsg";
-//	}
+	//  아이디 찾기
+	@GetMapping("/findid")
+	public String findId() {
+		return "findIdForm";
+	}
+	
+	@PostMapping("/findid")
+	public String findId(Model model, MemberDto dto) {
+		String msg = "";
+		
+		String userid = memberService.getMemberByName(dto);	
+		if(userid == null) {
+			msg = "해당 아이디가 존재하지 않습니다!!";
+		} else {
+			msg = "당신의 아이디는 '" + userid + "' 입니다."	;	
+		}
+		model.addAttribute("msg",msg);
+		
+		return "sendmsg";
+	}
 }

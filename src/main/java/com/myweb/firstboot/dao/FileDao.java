@@ -10,8 +10,6 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.dao.DataAccessException;
 
 import com.myweb.firstboot.dto.FileDto;
-import com.myweb.firstboot.dto.GalaryDto;
-import com.myweb.firstboot.dto.ImgmngDto;
 
 @Mapper
 public interface FileDao {
@@ -32,13 +30,7 @@ public interface FileDao {
 	@Delete("delete from filemng where id=#{id}")
 	public void deleteFileById(@Param("id") int id) throws DataAccessException;
 	
-	// 이미지 파일 업로드
-	@Insert("insert into imgmng values(null,  #{file_name}, #{file_path}, #{org_file_name}, #{galary_id}, #{userid}, #{thumbnail})")
-	public void insertImg(ImgmngDto imgDto) throws DataAccessException;
 	
-	// 이미지 리스트 조회
-	@Select("select * from galary where userid=#{userid}")
-	public List<GalaryDto> selectImgByUserid(@Param("userid") String userid) throws DataAccessException;
 }
 
 

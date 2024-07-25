@@ -28,6 +28,6 @@ public interface MemberService {
 
 	boolean checkMember(MemberDto dto);
 
-//	String checkMemberId(MemberDto dto);
+	String getMemberByName(MemberDto dto);
 
 }

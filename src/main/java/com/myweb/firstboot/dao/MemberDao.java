@@ -53,5 +53,8 @@ public interface MemberDao {
 
 	@Update("update member set permit=#{permit} where userid=#{userid}")
 	public void updatePermit(@Param("userid") String userid, @Param("permit") int permit) throws DataAccessException;
+
+	@Select("select userid from member where username=#{username} and birthdate=#{birthdate} and usertel=#{usertel}")
+	public String selectUserId(MemberDto dto) throws DataAccessException;
 	
 }

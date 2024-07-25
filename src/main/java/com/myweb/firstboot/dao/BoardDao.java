@@ -11,7 +11,10 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.dao.DataAccessException;
 
+import com.myweb.firstboot.Search;
 import com.myweb.firstboot.dto.BoardDto;
+import com.myweb.firstboot.dto.GalaryDto;
+import com.myweb.firstboot.dto.ImgmngDto;
 import com.myweb.firstboot.dto.PostDto;
 import com.myweb.firstboot.dto.ReplyDto;
 
@@ -21,8 +24,28 @@ public interface BoardDao {
 	public List<PostDto> selectPostListAll() throws DataAccessException;
 	
 	//오버로딩
-	@Select("select * from post where board_no=#{board_no} order by post_no desc")
-	public List<PostDto> selectPostListByBoardNo(@Param("board_no") int board_no) throws DataAccessException;
+	@Select("select * from post where board_no=#{board_no} order by post_no desc limit #{offset}, #{cnt}")
+	public List<PostDto> selectPostListByBoardNo(@Param("board_no") int board_no,
+			@Param("offset") int offset, @Param("cnt") int cnt) throws DataAccessException;
+	// 해당 게시판에 대한 총 건수
+	@Select("select count(*) from post where board_no=#{board_no} and")
+	public int selectPostCntByBoardNo(@Param("board_no") int board_no) throws DataAccessException;
+	
+	
+	// 검색기능 (concat을 안해주면 문자로 인식해 오류가 난다.)
+	@Select("select * from post where board_no=#{board_no} and"
+			+ "title like concat('%',#{keyword},'%') or content like concat('%',#{keyword},'%')"
+			+ "order by post_no desc limit #{offset}, #{recordSize}")
+	public List<PostDto> selectPostListByKeyword(@Param("board_no") int board_no, 
+			@Param("offset") int offset,
+			@Param("cnt") int cnt,
+			@Param("keyword") int keyword) throws DataAccessException;
+	
+	@Select("select count(*) from post where board_no=#{board_no} and"
+			+ "title like concat('%',#{keyword},'%') or content like concat('%',#{keyword},'%')")
+	public int selectPostCntByBoardNo(@Param("board_no") int board_no,
+			@Param("board_no") Search keyword) throws DataAccessException;
+	
 	
 	
 	@Insert("insert into post(board_no, title, content, userid, create_date, update_date, hit_cnt)"
@@ -53,6 +76,7 @@ public interface BoardDao {
 	
 	@Select("select * from board") //게시글 전체
 	public List<BoardDto> selectBoardList() throws DataAccessException;
+	
 	@Select("select * from board where board_no=#{board_no}") //게시글 번호
 	public BoardDto selectBoard(@Param("board_no") int board_no) throws DataAccessException;
 	
@@ -70,4 +94,35 @@ public interface BoardDao {
 	@Insert("insert into board values(null, #{board_name}, #{descript})")
 	public void insertBoard(BoardDto dto) throws DataAccessException;
 	
+	// 이미지 리스트 조회
+	@Insert("insert into galary values(null,  #{title}, #{userid}, 0)")
+	@Options(useGeneratedKeys=true, keyProperty="id")
+	public void insertGalary(GalaryDto dto) throws DataAccessException;
+	// 이미지 파일 업로드
+	@Insert("insert into imgmng values(null,  #{file_name}, #{file_path}, #{org_file_name}, #{galary_id}, #{userid}, #{thumbnail})")
+	public void insertImg(ImgmngDto imgDto) throws DataAccessException;
+	// 리스트 가져오기
+	@Select("select g.id, g.title, g.userid, g.hit_cnt, i.id as img_id\r\n"
+			+ "from galary g\r\n"
+			+ "join imgmng i on g.id = i.galary_id\r\n"
+			+ "where i.thumbnail ='1'")
+	public List<GalaryDto> selectGalaryList() throws DataAccessException;
+
+	@Select("select * from imgmng where galary_id=#{galary_id}")
+	public List<ImgmngDto> selectImageByGalaryId(@Param("galary_id") int galary_id) throws DataAccessException;
+
+	@Select("select * from imgmng where id=#{id}")
+	public ImgmngDto selectImageById(@Param("id") int id) throws DataAccessException;
+
+	@Select("select * from imgmng where galary_id=#{galary_id}")
+	public ImgmngDto selectImgGalaryId(int galary_id) throws DataAccessException;
+
+	@Select("select * from galary where id=#{galary_id}")
+	public GalaryDto selectGalaryId(int galary_id) throws DataAccessException;
+
+	
+	
+
+	
+
 }
