@@ -64,13 +64,17 @@ public class BoardController { //게시판 컨트롤러
 	@GetMapping("/board/{board_no}/{page}")
 	public String boardPage(Model model, @PathVariable("board_no") int board_no,
 			@PathVariable("page") int page, 
-			@RequestParam(value="keyword", defaultValue="") String keyword) {
-		Search search = new Search(5, 5);
+			@RequestParam(value="keyword", defaultValue="") String keyword,
+			@RequestParam(value = "recordSize", defaultValue = "") int recordSize,
+            @RequestParam(value = "searchType", required = false) String searchType) {
+		Search search = new Search(page, recordSize);
 		// 검색기능 추가(키워드 파라메타가 있으면 키워드 설정)
 		search.setKeyword(keyword);
 		search.setPage(page);
+		search.getOffset();
 		//게시판 리스트
 		List<PostDto> list = service.getPostListByBoard(board_no, search);
+		int totPostCount = service.getTotPostCount(board_no, keyword, searchType, page);
 		model.addAttribute("list", list);
 		// 페이징에 대한 것도 같이 가야함
 		model.addAttribute("page",search);
@@ -80,6 +84,7 @@ public class BoardController { //게시판 컨트롤러
 		//게시판 메뉴
 		List<BoardDto> menu = service.getBoardMenu();
 		model.addAttribute("menu", menu);
+		
 		
 		return "board";
 	}

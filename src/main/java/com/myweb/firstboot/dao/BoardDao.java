@@ -45,6 +45,12 @@ public interface BoardDao {
 	public int selectPostCntByKeyword(@Param("board_no") int board_no,
 			@Param("keyword") String keyword) throws DataAccessException;
 	
+	@Select("SELECT COUNT(*) FROM post WHERE board_no = #{board_no} "
+            + " AND"
+            + " title LIKE CONCAT('%', #{keyword}, '%')"
+            + " limit #{searchType},#{page}")
+	public int countPosts(@Param("board_no") int board_no, @Param("keyword") String keyword,
+			@Param("searchType") String searchType, @Param("page") int page) throws DataAccessException;
 	
 	
 	@Insert("insert into post(board_no, title, content, userid, create_date, update_date, hit_cnt)"
@@ -118,6 +124,8 @@ public interface BoardDao {
 
 	@Select("select * from galary where id=#{galary_id}")
 	public GalaryDto selectGalaryId(int galary_id) throws DataAccessException;
+
+	
 
 	
 	

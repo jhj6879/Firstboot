@@ -46,6 +46,10 @@ public class BoardServiceIpl implements BoardService {
 		return dao.selectPostListByKeyword(board_no, offset, cnt, keyword);
 	}
 	
+	public int getTotPostCount(int board_no, String keyword, String searchType, int page) {
+		return dao.countPosts(board_no, keyword, searchType, page);
+	}
+	
 	public PostDto putPost(PostDto dto) {
 		dao.insertPost(dto);
 		return dao.selectPostByPostNo(dto.getPost_no());
@@ -136,6 +140,8 @@ public class BoardServiceIpl implements BoardService {
 	public GalaryDto getGalary(int galary_id) {
 		return dao.selectGalaryId(galary_id);
 	}
+
+	
 	
 	
 	

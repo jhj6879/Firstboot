@@ -15,6 +15,7 @@ public interface BoardService {
 	// 페이징
 	List<PostDto> getPostListByBoard(int board_no, Search search);
 	List<PostDto> getPostListByKeyword(int board_no, Search page);
+	int getTotPostCount(int board_no, String keyword, String searchType, int page);
 	
 	PostDto putPost(PostDto dto);
 	

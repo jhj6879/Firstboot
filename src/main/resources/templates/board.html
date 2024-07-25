@@ -23,12 +23,12 @@
 				<option value="25">25개씩</option>
 				<option value="50">50개씩</option>
 				<option value="100">100개씩</option>
-			</select>
+			</select><br>
 			<select id="searchType" name="searchType" title="검색 유형 선택">
 				<option value="">전체 검색</option>
 				<option value="title">글 제목</option>
 			</select> 
-			<input type="text" id="keyword" name="keyword" placeholder="키워드를 입력해 주세요." title="키워드 입력" />
+			<input type="text" id="keyword" name="keyword" placeholder="키워드를 입력해 주세요." title="키워드 입력"/>
 			<button type="button" class="bt_search" th:data-boardno="${board_no}" onclick="search(this)">
 				<i class="fas fa-search"></i><span class="skip_info">검색</span>
 			</button>
