@@ -30,15 +30,16 @@ public class BoardServiceIpl implements BoardService {
 //	}
 	// 페이징 기능
 	public List<PostDto> getPostListByBoard(int board_no, Search search){
-		search.calcPage(dao.selectPostCntByBoardNo(board_no));
+		search.calcPage(dao.selectPostCntByKeyword(board_no, search.getKeyword()));
 		int offset = search.getOffset();
 		int cnt = search.getRecordSize();
-		return dao.selectPostListByBoardNo(board_no, offset, cnt);
+		String keyword = search.getKeyword();
+		return dao.selectPostListByKeyword(board_no, offset, cnt, keyword);
 	}
 	
-	// 검색기능
+	// 검색기능(페이징과 함침)
 	public List<PostDto> getPostListByKeyword(int board_no, Search page) {
-		page.calcPage(dao.selectPostCntByBoardNo(board_no, page.getKeyword()));
+		page.calcPage(dao.selectPostCntByKeyword(board_no, page.getKeyword()));
 		int offset = page.getOffset();
 		int cnt = page.getRecordSize();
 		String keyword = page.getKeyword();

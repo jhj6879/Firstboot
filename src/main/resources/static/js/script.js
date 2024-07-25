@@ -364,5 +364,5 @@ function movePage(page) {
 function search(button){
 	var boardno = button.getAttribute('data-boardno');
 	var keyword = document.getElementById("keyword").value;
-	location.href="/search/" + boardno + "?keyword=" + keyword;
+	location.href="/board/" + boardno + "?keyword=" + keyword;
 }

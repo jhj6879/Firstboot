@@ -11,7 +11,6 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.dao.DataAccessException;
 
-import com.myweb.firstboot.Search;
 import com.myweb.firstboot.dto.BoardDto;
 import com.myweb.firstboot.dto.GalaryDto;
 import com.myweb.firstboot.dto.ImgmngDto;
@@ -28,23 +27,23 @@ public interface BoardDao {
 	public List<PostDto> selectPostListByBoardNo(@Param("board_no") int board_no,
 			@Param("offset") int offset, @Param("cnt") int cnt) throws DataAccessException;
 	// 해당 게시판에 대한 총 건수
-	@Select("select count(*) from post where board_no=#{board_no} and")
+	@Select("select count(*) from post where board_no=#{board_no}")
 	public int selectPostCntByBoardNo(@Param("board_no") int board_no) throws DataAccessException;
 	
 	
 	// 검색기능 (concat을 안해주면 문자로 인식해 오류가 난다.)
 	@Select("select * from post where board_no=#{board_no} and"
-			+ "title like concat('%',#{keyword},'%') or content like concat('%',#{keyword},'%')"
-			+ "order by post_no desc limit #{offset}, #{recordSize}")
+			+ " title like concat('%',#{keyword},'%') or content like concat('%',#{keyword},'%')"
+			+ " order by post_no desc limit #{offset}, #{cnt}")
 	public List<PostDto> selectPostListByKeyword(@Param("board_no") int board_no, 
 			@Param("offset") int offset,
 			@Param("cnt") int cnt,
-			@Param("keyword") int keyword) throws DataAccessException;
+			@Param("keyword") String keyword) throws DataAccessException;
 	
 	@Select("select count(*) from post where board_no=#{board_no} and"
-			+ "title like concat('%',#{keyword},'%') or content like concat('%',#{keyword},'%')")
-	public int selectPostCntByBoardNo(@Param("board_no") int board_no,
-			@Param("board_no") Search keyword) throws DataAccessException;
+			+ " title like concat('%',#{keyword},'%') or content like concat('%',#{keyword},'%')")
+	public int selectPostCntByKeyword(@Param("board_no") int board_no,
+			@Param("keyword") String keyword) throws DataAccessException;
 	
 	
 	

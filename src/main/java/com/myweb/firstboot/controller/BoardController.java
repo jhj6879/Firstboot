@@ -41,13 +41,16 @@ public class BoardController { //게시판 컨트롤러
 	
 	//게시판 페이지 및 페이징
 	@GetMapping("/board/{board_no}")
-	public String boardPage(Model model, @PathVariable("board_no") int board_no) {
-		Search page = new Search(5, 5);
+	public String boardPage(Model model, @PathVariable("board_no") int board_no,
+			@RequestParam(value="keyword", defaultValue="") String keyword) {
+		Search search = new Search(5, 5);
+		// 검색기능 추가(키워드 파라메타가 있으면 키워드 설정)
+		search.setKeyword(keyword);
 		//게시판 리스트
-		List<PostDto> list = service.getPostListByBoard(board_no, page);
+		List<PostDto> list = service.getPostListByBoard(board_no, search);
 		model.addAttribute("list", list);
 		// 페이징에 대한 것도 같이 가야함
-		model.addAttribute("page",page);
+		model.addAttribute("page",search);
 		//해당 게시글에 대한 번호(정보)
 		BoardDto board = service.getBoard(board_no);
 		model.addAttribute("board", board);
@@ -56,12 +59,15 @@ public class BoardController { //게시판 컨트롤러
 		model.addAttribute("menu", menu);
 		
 		return "board";
-	}
+	}	
 	
 	@GetMapping("/board/{board_no}/{page}")
 	public String boardPage(Model model, @PathVariable("board_no") int board_no,
-			@PathVariable("page") int page) {
+			@PathVariable("page") int page, 
+			@RequestParam(value="keyword", defaultValue="") String keyword) {
 		Search search = new Search(5, 5);
+		// 검색기능 추가(키워드 파라메타가 있으면 키워드 설정)
+		search.setKeyword(keyword);
 		search.setPage(page);
 		//게시판 리스트
 		List<PostDto> list = service.getPostListByBoard(board_no, search);
@@ -75,6 +81,26 @@ public class BoardController { //게시판 컨트롤러
 		List<BoardDto> menu = service.getBoardMenu();
 		model.addAttribute("menu", menu);
 		
+		return "board";
+	}
+	
+	// 검색기능 (board 기능과 합침)
+	@GetMapping("/search/{board_no}")
+	public String searchPost(@RequestParam("keyword") String keyword, Model model,
+			 @PathVariable("board_no") int board_no) {
+		Search page = new Search(5, 5);
+		page.setKeyword(keyword);
+		// 게시판 리스트
+		List<PostDto> list = service.getPostListByKeyword(board_no, page);
+		model.addAttribute("list", list);
+		// 페이징에 대한 것도 같이 가야함
+		model.addAttribute("page", page);
+		// 해당 게시글에 대한 번호(정보)
+		BoardDto board = service.getBoard(board_no);
+		model.addAttribute("board", board);
+		// 게시판 메뉴
+		List<BoardDto> menu = service.getBoardMenu();
+		model.addAttribute("menu", menu);
 		return "board";
 	}
 	
@@ -375,16 +401,6 @@ public class BoardController { //게시판 컨트롤러
 		return "imgviewForm";
 	}
 	
-	@GetMapping("/search/{board_no}")
-	public String searchPost(@RequestParam("keyword") String keyword, Model model,
-			 @PathVariable("board_no") int board_no) {
-		Search page = new Search(5, 5);
-		page.setKeyword(keyword);
-		// 게시판 리스트
-		List<PostDto> list = service.getPostListByKeyword(board_no, page);
-		model.addAttribute("list", list);
-		// 페이징에 대한 것도 같이 가야함
-		model.addAttribute("page", page);
-		return "board";
-	}
+
+	
 }

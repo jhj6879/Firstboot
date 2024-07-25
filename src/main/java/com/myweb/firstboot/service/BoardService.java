@@ -13,8 +13,8 @@ public interface BoardService {
 	List<PostDto> getPostList(); //게시글을 받아옴
 //	List<PostDto> getPostListByBoard(int board_no);
 	// 페이징
-	List<PostDto> getPostListByBoard(int board_no, Search page);
-	List<PostDto> getPostListByKeyword(int board_no, int offset, int cnt, String keyword);
+	List<PostDto> getPostListByBoard(int board_no, Search search);
+	List<PostDto> getPostListByKeyword(int board_no, Search page);
 	
 	PostDto putPost(PostDto dto);
 	
